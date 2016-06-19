@@ -96,28 +96,28 @@
 (define gpio-set-pin-mode
   (lambda (pin mode)
     (cond
-      [(= mode 'input) (gpio-pin-mode-native pin gpio-pin-input)]
-      [(= mode 'output) (gpio-pin-mode-native pin gpio-pin-output)]
-      [(= mode 'pwm) (gpio-pin-mode-native pin gpio-pin-pwm)]
-      [(= mode 'clock) (gpio-pin-mode-native pin gpio-pin-clock)]
-      [(= mode 'soft-pwm) (gpio-pin-mode-native pin gpio-pin-soft-pwm)]
-      [(= mode 'soft-tone) (gpio-pin-mode-native pin gpio-pin-soft-tone)]
-      [(= mode 'pwm-tone) (gpio-pin-mode-native pin gpio-pin-pwm-tone)]
+      [(eq? mode 'input) (gpio-pin-mode-native pin gpio-pin-input)]
+      [(eq? mode 'output) (gpio-pin-mode-native pin gpio-pin-output)]
+      [(eq? mode 'pwm) (gpio-pin-mode-native pin gpio-pin-pwm)]
+      [(eq? mode 'clock) (gpio-pin-mode-native pin gpio-pin-clock)]
+      [(eq? mode 'soft-pwm) (gpio-pin-mode-native pin gpio-pin-soft-pwm)]
+      [(eq? mode 'soft-tone) (gpio-pin-mode-native pin gpio-pin-soft-tone)]
+      [(eq? mode 'pwm-tone) (gpio-pin-mode-native pin gpio-pin-pwm-tone)]
       [else (error 'gpio-set-pin-mode (string-join "Erroneous pin mode passed: " (symbol->string mode) ". Valid: 'input 'output 'pwm 'clock 'soft-pwm 'soft-tone 'pwm-tone"))])))
 
 (define gpio-set-pull-resistor
   (lambda (pin mode)
     (cond
-      [(= mode 'up) (gpio-pull-up-down-control pin gpio-pull-up)]
-      [(= mode 'down) (gpio-pull-up-down-control pin gpio-pull-down)]
-      [(= mode 'off) (gpio-pull-up-down-control pin gpio-pull-off)]
+      [(eq? mode 'up) (gpio-pull-up-down-control pin gpio-pull-up)]
+      [(eq? mode 'down) (gpio-pull-up-down-control pin gpio-pull-down)]
+      [(eq? mode 'off) (gpio-pull-up-down-control pin gpio-pull-off)]
       [else (error 'gpio-set-pull-resistor (string-join "Erroneous pullup/down mode passed: " (symbol->string mode) ". Valid: 'up, 'down, 'off'"))])))
                             
 
 ;; GPIO delay
 (define gpio-delay-seconds
   (lambda (seconds)
-    (gpio-delay-µs (floor (* seconds 1000000)))))
+    (gpio-delay-µs (exact-floor (* seconds 1000000)))))
 
 ;; Write a byte of data sequentially to specified pin
 (define gpio-write-serial-byte
