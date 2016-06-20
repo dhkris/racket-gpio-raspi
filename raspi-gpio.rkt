@@ -18,6 +18,7 @@
 (require ffi/unsafe)
 (define wiringpi-lib (ffi-lib "/usr/lib/libwiringPi"))
 
+(provide (except-out (all-defined-out) wiringpi-lib))
 
 ;;; General-purpose IO
 
