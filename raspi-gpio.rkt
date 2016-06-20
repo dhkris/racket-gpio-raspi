@@ -76,18 +76,18 @@
 
 
 ;; Pin mode defines
-(define gpio-pin-input 0)
-(define gpio-pin-output 1)
-(define gpio-pin-pwm 2)
-(define gpio-pin-clock 3)
-(define gpio-pin-soft-pwm 4)
-(define gpio-pin-soft-tone 5)
-(define gpio-pin-pwm-tone 6)
+(define π-gpio-pin-input 0)
+(define π-gpio-pin-output 1)
+(define π-gpio-pin-pwm 2)
+(define π-gpio-pin-clock 3)
+(define π-gpio-pin-soft-pwm 4)
+(define π-gpio-pin-soft-tone 5)
+(define π-gpio-pin-pwm-tone 6)
 
 ;; Pullup/down modes
-(define gpio-pull-up 2)
-(define gpio-pull-down 1)
-(define gpio-pull-off 0)
+(define π-gpio-pull-up 2)
+(define π-gpio-pull-down 1)
+(define π-gpio-pull-off 0)
 
 
 
@@ -96,21 +96,21 @@
 (define gpio-set-pin-mode
   (lambda (pin mode)
     (cond
-      [(eq? mode 'input) (gpio-pin-mode-native pin gpio-pin-input)]
-      [(eq? mode 'output) (gpio-pin-mode-native pin gpio-pin-output)]
-      [(eq? mode 'pwm) (gpio-pin-mode-native pin gpio-pin-pwm)]
-      [(eq? mode 'clock) (gpio-pin-mode-native pin gpio-pin-clock)]
-      [(eq? mode 'soft-pwm) (gpio-pin-mode-native pin gpio-pin-soft-pwm)]
-      [(eq? mode 'soft-tone) (gpio-pin-mode-native pin gpio-pin-soft-tone)]
-      [(eq? mode 'pwm-tone) (gpio-pin-mode-native pin gpio-pin-pwm-tone)]
+      [(eq? mode 'input) (gpio-pin-mode-native pin π-gpio-pin-input)]
+      [(eq? mode 'output) (gpio-pin-mode-native pin π-gpio-pin-output)]
+      [(eq? mode 'pwm) (gpio-pin-mode-native pin π-gpio-pin-pwm)]
+      [(eq? mode 'clock) (gpio-pin-mode-native pin π-gpio-pin-clock)]
+      [(eq? mode 'soft-pwm) (gpio-pin-mode-native pin π-gpio-pin-soft-pwm)]
+      [(eq? mode 'soft-tone) (gpio-pin-mode-native pin π-gpio-pin-soft-tone)]
+      [(eq? mode 'pwm-tone) (gpio-pin-mode-native pin π-gpio-pin-pwm-tone)]
       [else (error 'gpio-set-pin-mode (string-join "Erroneous pin mode passed: " (symbol->string mode) ". Valid: 'input 'output 'pwm 'clock 'soft-pwm 'soft-tone 'pwm-tone"))])))
 
 (define gpio-set-pull-resistor
   (lambda (pin mode)
     (cond
-      [(eq? mode 'up) (gpio-pull-up-down-control pin gpio-pull-up)]
-      [(eq? mode 'down) (gpio-pull-up-down-control pin gpio-pull-down)]
-      [(eq? mode 'off) (gpio-pull-up-down-control pin gpio-pull-off)]
+      [(eq? mode 'up) (gpio-pull-up-down-control pin π-gpio-pull-up)]
+      [(eq? mode 'down) (gpio-pull-up-down-control pin π-gpio-pull-down)]
+      [(eq? mode 'off) (gpio-pull-up-down-control pin π-gpio-pull-off)]
       [else (error 'gpio-set-pull-resistor (string-join "Erroneous pullup/down mode passed: " (symbol->string mode) ". Valid: 'up, 'down, 'off'"))])))
                             
 
@@ -119,6 +119,11 @@
   (lambda (seconds)
     (gpio-delay-µs (exact-floor (* seconds 1000000)))))
 
+;; Elapsed time in seconds
+(define gpio-elapsed-seconds
+  (lambda ()
+    (exact->inexact (/ (gpio-elapsed-ms) 1000))))
+      
 ;; Write a byte of data sequentially to specified pin
 (define gpio-write-serial-byte
   (lambda (pin byte bit-duration)
